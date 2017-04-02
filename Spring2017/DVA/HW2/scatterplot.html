@@ -1,0 +1,298 @@
+   
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Scatter Plot</title>
+        <script type="text/javascript" src="../lib/d3.v3.min.js" charset="utf-8"></script>
+        <style type="text/css">
+             
+  body {
+  font: 10px sans-serif;
+  }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+            </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+
+      var margin={top:30,right:30,bottom:30,left:130}
+    width = 950,
+    height = 450;
+
+      //setting x axis and x scale 
+      var xVal = function(d) { return d.BodyMass;};
+      var xScale = d3.scale.linear().range([0, width]);
+    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    xMap = function(d) {
+        return xScale(xVal(d));
+    };
+var yVal = function(d) { return d.Distribution;};
+var yScale = d3.scale.linear().range([height, 10]);
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
+    yMap = function(d) {
+        return yScale(yVal(d));
+    };
+    
+
+var cVal1 = function(d) { return d.Species;},
+    color = d3.scale.category10();
+        //creating svg
+
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 10 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Distribution v.s Body Mass");
+    
+d3.tsv("data.tsv", function(error, data) {
+  if (error) throw error;
+
+  data.forEach(function(d) {
+    d.Distribution = +d.Distribution;
+    d.BodyMass = +d.BodyMass;
+  });
+ 
+//creating svg
+xScale.domain(d3.extent(data, function(d) { return d.BodyMass; })).nice();
+  yScale.domain(d3.extent(data, function(d) { return d.Distribution; })).nice();
+    //creating x axis
+svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("BodyMass")
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Distribution")
+
+svg.selectAll(".point")
+    .data(data)
+   .enter().append("path")
+    .attr("class","point")
+    .attr("transform", function(d) { return "translate(" + xMap(d) +  "," + yMap(d) + ")"; })
+    .attr("d",d3.svg.symbol().size(function(d){return 30;}) 
+.type(function(d){if (d.Species === "Lagomorpha") 
+             return "circle";
+          if (d.Species === "Dasyuromorphia") 
+          return "triangle-up";
+    else 
+    return "square";})) 
+     .style("stroke-width", 1)
+        .style("stroke", getColor)
+        .style("fill", "none");
+
+        function getColor(d) {
+            switch (d.Species) {
+                case "Lagomorpha":
+                    return "red";
+                case "Didelphimorphia":
+                    return "blue";
+                case "Dasyuromorphia":
+                    return "green";
+            }
+          }
+
+    
+var legendNames = ["Lagomorpha", "Didelphimorphia", "Dasyuromorphia"];
+ var legend = svg.selectAll(".legend")
+      .data(legendNames)
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(10," + i * 20 + ")"; });
+
+ legend.append("rect")
+        .attr("d", d3.svg.symbol().type(function(d) {
+            if (d.Species == "Lagomorpha") return "circle";
+            if (d.Species == "Didelphimorphia") return "square";
+            if (d.Species == "Dasyuromorphia") return "triangle-up";
+        }))
+        .style("stroke", function(d) {
+            switch (d.Species) {
+                case "Lagomorpha":
+                    return "red";
+                case "Didelphimorphia":
+                    return "blue";
+                case "Dasyuromorphia":
+                    return "green";
+            }
+        })
+        .style("fill", "none");
+
+//legend text
+  legend.append("text")
+      .attr("x", width - 20)
+      .attr("y", 10)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+  
+
+//////////////////////////////////2nd plot/////////////////////////////
+        
+ //setting x axis and x scale 
+      var xVal1 = function(d) { return d.BodyMass;};
+      var xScale1 = d3.scale.log().range([0, width]);
+    xAxis1 = d3.svg.axis().scale(xScale1).orient("bottom");
+    xMap1 = function(d) {
+        return xScale1(xVal1(d));
+    };
+var yVal = function(d) { return d.Distribution;};
+var yScale1 = d3.scale.log().range([height, 10]);
+    yAxis1 = d3.svg.axis().scale(yScale1).orient("left");
+    yMap1 = function(d) {
+        return yScale1(yVal1(d));
+    };
+    
+
+var cVal2 = function(d) { return d.Species;},
+    color = d3.scale.category10();
+        //creating svg
+
+
+var svg1 = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg1.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 10 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Distribution v.s Body Mass(log scale values)");
+
+d3.tsv("data.tsv", function(error, data) {
+  if (error) throw error;
+
+  data.forEach(function(d) {
+    d.Distribution = +d.Distribution;
+    d.BodyMass = +d.BodyMass;
+  });
+ 
+//creating svg
+xScale1.domain(d3.extent(data, function(d) { return d.BodyMass; })).nice();
+  yScale1.domain(d3.extent(data, function(d) { return d.Distribution; })).nice();
+    //creating x axis
+svg1.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis1)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("BodyMass")
+
+  svg1.append("g")
+      .attr("class", "y axis")
+      .call(yAxis1)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Distribution")
+
+svg1.selectAll(".point")
+    .data(data)
+   .enter().append("path")
+    .attr("class","point")
+    .attr("transform", function(d) { return "translate(" + xMap(d) +  "," + yMap(d) + ")"; })
+    .attr("d",d3.svg.symbol().size(function(d){return 50;}) 
+.type(function(d){if (d.Species === "Lagomorpha") 
+             return "circle";
+          if (d.Species === "Dasyuromorphia") 
+          return "triangle-up";
+    else 
+    return "square";})) 
+     .style("stroke-width", 1)
+        .style("stroke", getColor)
+        .style("fill", "none");
+
+        function getColor(d) {
+            switch (d.Species) {
+                case "Lagomorpha":
+                    return "red";
+                case "Didelphimorphia":
+                    return "blue";
+                case "Dasyuromorphia":
+                    return "green";
+            }
+          }
+    
+var legendNames = ["Lagomorpha", "Didelphimorphia", "Dasyuromorphia"];
+ var legend = svg1.selectAll(".legend")
+      .data(legendNames)
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 30 + ")"; });
+
+ legend.append("rect")
+        .attr("d", d3.svg.symbol().type(function(d) {
+            if (d.Species == "Lagomorpha") return "circle";
+            if (d.Species == "Didelphimorphia") return "square";
+            if (d.Species == "Dasyuromorphia") return "triangle-up";
+        }))
+        .style("stroke", function(d) {
+            switch (d.Species) {
+                case "Lagomorpha":
+                    return "red";
+                case "Didelphimorphia":
+                    return "blue";
+                case "Dasyuromorphia":
+                    return "green";
+            }
+        })
+        .style("fill", "none");
+
+//legend text
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+
+
+
+}); });
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,1 @@
+Log scale can be used when data is of very high range is to be displayed efficiently.. With a linear scale and large range the scatter plot would not be able to adequately represent the distribution within each sub range.
