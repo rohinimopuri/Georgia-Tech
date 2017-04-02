@@ -1,0 +1,17 @@
+c(i)
+the number of unique values for “event” is 1644
+the number of unique values for “venue” is 142
+(ii)
+toString(toDate(value),"EEEEEE,MMMM dd,yyyy")
+(iii)
+Nominal Data- Venue
+Ordinal Data- Status
+Venue is nominal data because categoring a venue into commercial, public, private etc. is nothing but naming or labelling the data without any measure. 
+Status is ordinal data because the values of status in the data "under review","complete","in progress" are the quantitaive ordering terms.
+(iv)
+or(value.conatians(“GERMAN AND ENGLISH”),value.conatians(“ENGLISH AND GERMAN”))
+(v)
+chomp(value,'_wotm')
+(vi)
+For deeper level cleaning and refining customized facets customized facets can be used.Text facet can be used for searching for words within the column data.
+Word facet can be used to locate all the rows with a given word. Facet by blank is used to group all the data with blank entry when set value to 'True'.

@@ -1,0 +1,3 @@
+The name of the country with the highest gdp_per_capita is Luxembourg
+
+The name of the country with the lowest avg_bmi is Croatia
