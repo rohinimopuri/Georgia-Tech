@@ -1,0 +1,5 @@
+Average node degree - 2.064 - There are on average 2.064 edges incident on a node as we are obtaining 10 friends/ followers for primary and secondary users only and hence the node degree averages out to 2.064.
+
+Diameter of the graph - 4 - A maximum of 4 users must be traversed to obtain a connection between any two users in the graph. 
+
+Average path length - 3.679 - It is the average number of users that lie along the shortest paths for all possible pairs of twitter users represented

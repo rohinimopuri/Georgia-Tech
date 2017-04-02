@@ -1,0 +1,3 @@
+1. The node,colour and text size were scaled as per the node degree to visualize a user's number of connections.
+2. The Yifan Hu layout algorithm was used as it kept the node and edge overlap to a minimun, while conveying friend/follower information using spatial clustering .
+3. Some manual editing was required to remove edge overlaps.
