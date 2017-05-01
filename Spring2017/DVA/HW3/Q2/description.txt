@@ -1,0 +1,8 @@
+
+[12]reading the file into a variable 
+[15]mapping each edge details. 
+[18]filtering all the edges with weight equal to 1. 
+[21,22]storing all the sources and the negative of the weight in a list and all the targets and the weight in another list. 
+[25]adding the weights of all nodes with same keys using reduce by key function. 
+[28]saving the result in an output variable
+[30]saving the result as text file 
