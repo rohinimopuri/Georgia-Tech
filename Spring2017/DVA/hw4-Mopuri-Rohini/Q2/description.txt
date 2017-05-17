@@ -1,0 +1,1 @@
+Forest size to 10 and number of trees to 10 is used. Improvement decreases as the number of trees increases, i.e at a certain point the benefit in prediction performance from learning more trees will be lower than the cost in computation time for learning these addition trees. OOB error rate is used to determine the number of trees. An accuracy of 94.5% was obatined.

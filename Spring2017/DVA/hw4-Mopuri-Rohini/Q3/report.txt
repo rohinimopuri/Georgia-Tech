@@ -1,0 +1,29 @@
+A. Experiment
+
+1.Random Forest: 
+Parameters: -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1 
+Time taken: 0.3 seconds
+Accuracy : 97.07%
+
+=== Confusion Matrix ===
+ a   b   <-- classified as
+432  12 |   a = 0
+  8 231 |   b = 1
+
+
+2.J48: 
+Parameters: J48 -C 0.25 -M 2
+Time taken: 0.06 seconds
+Accuracy : 96.04%
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 428  16 |   a = 0
+  11 228 |   b = 1
+
+B.
+
+1.The result of Weka is 97.07% compared to my result 94.5% because of hyper parameters such as leaf size, number of trees in the forest, maximum dept of the tree. 
+
+2.The RandomForest classifier has better accuracy over J48 classifier. But Random forest is slow in performance which can be attributed to the pruning mechanism which is carried out in J48 classifier. Also from the confusion matrix it can be observed that RandomForest has better false positive rate than J48 classifier. 
